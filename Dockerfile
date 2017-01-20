@@ -1,0 +1,11 @@
+FROM brandocorp/chefdk
+
+ENV TARMAC_RESOURCE_NAME=tarmac-supermarket-cookbook \
+    TARMAC_RESOURCE_VERSION=0.1.0
+ENV TARMAC_RESOURCE_GEM=$TARMAC_RESOURCE_NAME-$TARMAC_RESOURCE_VERSION.gem
+
+ADD exe /opt/resource
+
+COPY pkg/$TARMAC_RESOURCE_GEM /tmp
+
+RUN chef gem install /tmp/$TARMAC_RESOURCE_GEM

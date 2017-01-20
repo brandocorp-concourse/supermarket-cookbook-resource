@@ -1,0 +1,35 @@
+resources:
+  - name: base-image
+    type: docker-image
+    source:
+      repository: brandocorp/chefdk
+      tag: latest
+  - name: tarmac-supermarket-cookbook
+    type: git
+    source:
+      uri: https://github.com/tarmac/tarmac-supermarket-cookbook
+      branch: master
+  - name: tarmac-supermarket-cookbook-resource
+    type: docker-image
+    source:
+      repository: brandocorp/tarmac-supermarket-cookbook
+
+jobs:
+  - name: docker-build
+    plan:
+      - get: base-image
+        trigger: true
+      - get: tarmac-supermarket-cookbook
+        trigger: true
+      - task: rake-build
+        config:
+          inputs:
+            - name: tarmac-supermarket-cookbook
+          run:
+            path: rake
+            args:
+              - build
+      - put: tarmac-supermarket-cookbook-resource
+        params:
+          build: tarmac-supermarket-cookbook
+          tag_as_latest: true

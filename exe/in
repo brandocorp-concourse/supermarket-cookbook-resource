@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+require 'tarmac/supermarket_cookbook'
+
+destination = ARGV.dup.shift
+input = $stdin.read
+Tarmac::SupermarketCookbook.in(destination, input)

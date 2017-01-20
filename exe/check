@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+require 'tarmac/supermarket_cookbook'
+
+input = $stdin.read
+Tarmac::SupermarketCookbook.check($stdin.read)
